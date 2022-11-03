@@ -12,7 +12,14 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "scope": [
+          "$DATA",
+          "$DATA/xeniocra",
+          "$DATA/xeniocra/configuration.json"
+        ]
+      }
     },
     "bundle": {
       "active": true,

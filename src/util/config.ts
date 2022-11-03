@@ -3,14 +3,17 @@ import { dataDir } from '@tauri-apps/api/path'
 
 let configFilePath: string
 let defaultConfig: Configuration
+
 ;(async () => {
   defaultConfig = {
-    openInFullscreen: false
+    openInFullscreen: false,
+    gamesDirectory: ''
   }
 })()
 
 export interface Configuration {
   openInFullscreen: boolean
+  gamesDirectory: string
 }
 
 export async function setConfigOption<K extends keyof Configuration>(key: K, value: Configuration[K]): Promise<void> {
@@ -57,7 +60,7 @@ async function readConfigFile() {
     await fs.createDir(local + 'xeniocra').catch((e) => console.log(e))
   }
 
-  const dataFiles = await fs.readDir(local + '/xeniocra')
+  const dataFiles = await fs.readDir(local + 'xeniocra')
 
   // Ensure config exists
   if (!dataFiles.find((fileOrDir) => fileOrDir?.name === 'configuration.json')) {

@@ -2,7 +2,7 @@
   display: flex;
 
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   flex-direction: column;
 
   z-index: 99;
@@ -33,4 +33,13 @@
 
 .sidebar.right.open {
   right: 0;
+}
+
+.sidebar-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-inner div {
+  margin: 10px;
 }

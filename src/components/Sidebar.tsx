@@ -1,4 +1,4 @@
-import { Component } from 'preact'
+import { Component, ComponentChildren } from 'preact'
 
 import './Sidebar.css'
 
@@ -7,6 +7,7 @@ interface State {
 }
 
 interface Props {
+  children: ComponentChildren | null
   isOpen: boolean
   side: 'right' | 'left'
 }
@@ -29,7 +30,9 @@ export class Sidebar extends Component<Props, State> {
   render() {
     return (
       <div class={`sidebar ${this.props.side} ${this.state.open ? 'open':''}`}>
-        Yo
+        <div class='sidebar-inner'>
+          {this.props.children}
+        </div>
       </div>
     )
   }
