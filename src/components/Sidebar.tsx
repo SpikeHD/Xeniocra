@@ -1,10 +1,16 @@
 import { Component } from 'preact'
 
+import './Sidebar.css'
+
 interface State {
   open: boolean
 }
 
-export class Sidebar extends Component<{}, State> {
+interface Props {
+  isOpen: boolean
+}
+
+export class Sidebar extends Component<Props, State> {
   constructor() {
     super()
 
@@ -13,15 +19,15 @@ export class Sidebar extends Component<{}, State> {
     }
   }
 
-  toggleOpen() {
-    this.setState({
-      open: !this.state.open
-    })
+  static getDerivedStateFromProps(props: Props) {
+    return {
+      open: props.isOpen
+    }
   }
 
   render() {
     return (
-      <div class="sidebar">
+      <div class={`sidebar ${this.state.open ? 'open':''}`}>
         Yo
       </div>
     )
