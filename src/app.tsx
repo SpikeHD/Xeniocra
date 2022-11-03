@@ -1,11 +1,16 @@
-import { useState } from "preact/hooks";
-import { invoke } from "@tauri-apps/api/tauri";
-import "./app.css";
+import { invoke } from '@tauri-apps/api/tauri';
+import './app.css';
+import { Component } from 'preact';
+import { Sidebar } from './components/Sidebar';
 
-export function App<FC>() {
-  return (
-    <div class="container">
+export default class App extends Component {
+  constructor() {
+    super()
+  }
 
-    </div>
-  );
+  render() {
+    return (
+      <Sidebar />
+    )
+  }
 }
