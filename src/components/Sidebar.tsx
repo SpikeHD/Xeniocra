@@ -8,6 +8,7 @@ interface State {
 
 interface Props {
   isOpen: boolean
+  side: 'right' | 'left'
 }
 
 export class Sidebar extends Component<Props, State> {
@@ -27,7 +28,7 @@ export class Sidebar extends Component<Props, State> {
 
   render() {
     return (
-      <div class={`sidebar ${this.state.open ? 'open':''}`}>
+      <div class={`sidebar ${this.props.side} ${this.state.open ? 'open':''}`}>
         Yo
       </div>
     )

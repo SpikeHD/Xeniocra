@@ -1,0 +1,24 @@
+.sidebar {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+
+  z-index: 99;
+  position: absolute;
+  height: 100%;
+  width: 20%;
+  background-color: grey;
+
+  margin: 0;
+  padding: 0;
+  transition: left ease-in-out 0.2s;
+
+  top: 0;
+  left: -20%;
+}
+
+.sidebar.open {
+  left: 0;
+}

@@ -28,7 +28,7 @@ export class App extends Component<{}, State> {
     return (
       <>
         {/* This is hidden and displayed over top of the main page */}
-        <Sidebar isOpen={this.state.menuOpen} />
+        <Sidebar side='left' isOpen={this.state.menuOpen} />
 
         <div class="top">
           <div class="topLeft">
