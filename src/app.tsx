@@ -16,6 +16,22 @@ export class App extends Component<{}, State> {
     }
 
     this.toggleMenu = this.toggleMenu.bind(this)
+    this.handleClickOutside = this.handleClickOutside.bind(this)
+  }
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
+  handleClickOutside(evt: Event) {
+    // @ts-expect-error I love typescript
+    if (!evt.target.className.includes('sidebar') && this.state.menuOpen) {
+      this.toggleMenu()
+    }
   }
 
   toggleMenu() {

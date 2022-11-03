@@ -13,12 +13,24 @@
 
   margin: 0;
   padding: 0;
-  transition: left ease-in-out 0.2s;
 
   top: 0;
-  left: -20%;
 }
 
-.sidebar.open {
+.sidebar.left {
+  left: -20%;
+  transition: left ease-in-out 0.2s;
+}
+
+.sidebar.right {
+  right: -20%;
+  transition: right ease-in-out 0.2s;
+}
+
+.sidebar.left.open {
   left: 0;
+}
+
+.sidebar.right.open {
+  right: 0;
 }
