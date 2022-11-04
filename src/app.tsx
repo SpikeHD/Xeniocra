@@ -5,10 +5,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import { Sidebar } from './components/Sidebar';
 import { SettingsList } from './components/SettingsList';
 
-interface State {
-  menuOpen: boolean,
-  settingsOpen: boolean,
-}
+import bg from './assets/xenia-pattern-straight.png';
 
 export function App() {
   const [state, setState] = useState({
@@ -33,7 +30,7 @@ export function App() {
 
   const handleClickOutside = (evt: Event) => {
     // @ts-expect-error I love typescript
-    if (!evt.target.className.includes('sidebar')) {
+    if (evt.target.className.includes('sidebar-bg')) {
       closeMenus()
     }
   }
@@ -43,14 +40,20 @@ export function App() {
 
   return (
     <>
-      {/* This is hidden and displayed over top of the main page */}
-      <Sidebar side='left' isOpen={state.menuOpen}>
+      <div class="bg-image"></div>
+
+      <Sidebar title='Menu' side='left' isOpen={state.menuOpen}>
         <div>Menu Item One</div>
         <div>Menu Item One</div>
       </Sidebar>
-      <Sidebar side='right' isOpen={state.settingsOpen}>
+      <Sidebar title='Settings' side='right' isOpen={state.settingsOpen}>
         <SettingsList />
       </Sidebar>
+
+      {/* Cover the screen with a blur if a sidebar is open */}
+      <div class={"sidebar-bg " + (
+        state.menuOpen || state.settingsOpen ? 'show' : ''
+      )}></div>
 
       <div class="top">
         <div class="topLeft">
@@ -59,6 +62,9 @@ export function App() {
         <div class="topRight">
           <div onClick={openSettings}>=</div>
         </div>
+      </div>
+      <div class="contents">
+        Yo
       </div>
     </>
   )

@@ -7,6 +7,7 @@ interface Props {
   children: ComponentChildren | null
   side: 'right' | 'left'
   isOpen: boolean
+  title: string
 }
 
 export function Sidebar(props: Props) {
@@ -16,6 +17,7 @@ export function Sidebar(props: Props) {
 
   return (
     <div class={`sidebar ${props.side} ${open ? 'open':''}`}>
+      <div class="sidebar-title">{props.title}</div>
       <div class='sidebar-inner'>
         {props.children}
       </div>

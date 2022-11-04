@@ -1,0 +1,32 @@
+:root {
+  --dark-blue: #151a2e;
+  --grey: #bdbdbd;
+  --blue-highlight: #7998ac;
+}
+
+html {
+  background-color: var(--dark-blue);
+  overflow: hidden;
+  font-family: 'Space Mono', monospace;
+  color: #fff;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  user-select: none;
+}
+
+input[type='text'] {
+  padding: 2px;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid var(--grey);
+  border-radius: 5px;
+
+  transition: border-color ease-in-out 0.1s
+}
+
+input[type='text']:focus {
+  border-bottom: 2px solid var(--blue-highlight);
+}

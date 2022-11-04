@@ -43,3 +43,8 @@
 .sidebar-inner div {
   margin: 10px;
 }
+
+.sidebar-title {
+  font-weight: bold;
+  font-size: 20px;
+}
