@@ -1,39 +1,24 @@
-import { Component, ComponentChildren } from 'preact'
+import { ComponentChildren } from 'preact'
+import { useState } from 'preact/hooks'
 
 import './Sidebar.css'
 
-interface State {
-  open: boolean
-}
-
 interface Props {
   children: ComponentChildren | null
-  isOpen: boolean
   side: 'right' | 'left'
+  isOpen: boolean
 }
 
-export class Sidebar extends Component<Props, State> {
-  constructor() {
-    super()
+export function Sidebar(props: Props) {
+  const [open, setOpen] = useState(false)
 
-    this.state = {
-      open: false
-    }
-  }
+  setOpen(props.isOpen)
 
-  static getDerivedStateFromProps(props: Props) {
-    return {
-      open: props.isOpen
-    }
-  }
-
-  render() {
-    return (
-      <div class={`sidebar ${this.props.side} ${this.state.open ? 'open':''}`}>
-        <div class='sidebar-inner'>
-          {this.props.children}
-        </div>
+  return (
+    <div class={`sidebar ${props.side} ${open ? 'open':''}`}>
+      <div class='sidebar-inner'>
+        {props.children}
       </div>
-    )
-  }
+    </div>
+  )
 }

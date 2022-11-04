@@ -1,28 +1,20 @@
-import { Component } from "preact";
+import { useState, useEffect } from "preact/hooks";
 import { Configuration, getConfig } from "../util/config";
 
-interface State {
-  settings: Configuration
-}
+export function SettingsList() {
+  const [settings, setSettings] = useState({})
 
-export class SettingsList extends Component<{}, State> {
-  constructor() {
-    super()
-  }
-
-  async componentDidMount() {
-    const config = await getConfig()
-
-    this.setState({
-      settings: config
-    })
-  }
-
-  render() {
-    return (
-      <div>
-        Game Path: <input type="text" />
-      </div>
-    )
-  }
+  useEffect(() => {
+    // This sucks
+    (async () => {
+      const config = await getConfig()
+      setSettings(config)
+    })()
+  }, [])
+  
+  return (
+    <div>
+      Game Path: <input type="text" />
+    </div>
+  )
 }

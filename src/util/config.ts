@@ -7,13 +7,15 @@ let defaultConfig: Configuration
 ;(async () => {
   defaultConfig = {
     openInFullscreen: false,
-    gamesDirectory: ''
+    gamesDirectory: '',
+    xeniaDirectory: '',
   }
 })()
 
 export interface Configuration {
   openInFullscreen: boolean
   gamesDirectory: string
+  xeniaDirectory: string
 }
 
 export async function setConfigOption<K extends keyof Configuration>(key: K, value: Configuration[K]): Promise<void> {

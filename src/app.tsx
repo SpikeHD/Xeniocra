@@ -1,83 +1,65 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import './app.css';
-import { Component } from 'preact';
-import { getConfig } from './util/config';
+import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { Sidebar } from './components/Sidebar';
 import { SettingsList } from './components/SettingsList';
 
 interface State {
-  menuOpen: boolean
-  settingsOpen: boolean
+  menuOpen: boolean,
+  settingsOpen: boolean,
 }
 
-export class App extends Component<{}, State> {
-  constructor() {
-    super()
+export function App() {
+  const [state, setState] = useState({
+    menuOpen: true,
+    settingsOpen: true,
+  });
 
-    this.state = {
+  function closeMenus() {
+    setState(() => ({
       menuOpen: false,
       settingsOpen: false
+    }));
+  }
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     }
+  }, [])
 
-    this.toggleMenu = this.toggleMenu.bind(this)
-    this.toggleSettings = this.toggleSettings.bind(this)
-    this.handleClickOutside = this.handleClickOutside.bind(this)
-  }
-
-  componentDidMount() {
-    document.addEventListener("mousedown", this.handleClickOutside);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleClickOutside);
-  }
-
-  handleClickOutside(evt: Event) {
+  const handleClickOutside = (evt: Event) => {
     // @ts-expect-error I love typescript
     if (!evt.target.className.includes('sidebar')) {
-      if (this.state.menuOpen) this.toggleMenu()
-      if (this.state.settingsOpen) this.toggleSettings()
+      closeMenus()
     }
   }
 
-  toggleMenu() {
-    this.setState({
-      menuOpen: !this.state.menuOpen
-    })
-  }
+  const openMenu = () => setState({ ...state, menuOpen: !state.menuOpen})
+  const openSettings = () => setState({ ...state, settingsOpen: !state.settingsOpen})
 
-  toggleSettings() {
-    this.setState({
-      settingsOpen: !this.state.settingsOpen
-    })
-  }
+  return (
+    <>
+      {/* This is hidden and displayed over top of the main page */}
+      <Sidebar side='left' isOpen={state.menuOpen}>
+        <div>Menu Item One</div>
+        <div>Menu Item One</div>
+      </Sidebar>
+      <Sidebar side='right' isOpen={state.settingsOpen}>
+        <SettingsList />
+      </Sidebar>
 
-  async getConfig() {
-    const config = await getConfig()
-  }
-
-  render() {
-    return (
-      <>
-        {/* This is hidden and displayed over top of the main page */}
-        <Sidebar side='left' isOpen={this.state.menuOpen}>
-          <div>Menu Item One</div>
-          <div>Menu Item One</div>
-        </Sidebar>
-        <Sidebar side='right' isOpen={this.state.settingsOpen}>
-          <SettingsList />
-        </Sidebar>
-
-        <div class="top">
-          <div class="topLeft">
-            <div onClick={this.toggleMenu}>O</div>
-          </div>
-          <div class="topRight">
-            <div onClick={this.toggleSettings}>=</div>
-          </div>
+      <div class="top">
+        <div class="topLeft">
+          <div onClick={openMenu}>O</div>
         </div>
-      </>
-    )
-  }
+        <div class="topRight">
+          <div onClick={openSettings}>=</div>
+        </div>
+      </div>
+    </>
+  )
 }
