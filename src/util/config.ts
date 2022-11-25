@@ -4,7 +4,7 @@ import { dataDir } from '@tauri-apps/api/path'
 let configFilePath: string
 let defaultConfig: Configuration
 
-;(async () => {
+;(() => {
   defaultConfig = {
     openInFullscreen: false,
     gamesDirectory: '',
@@ -28,6 +28,10 @@ export async function getConfigOption<K extends keyof Configuration>(key: K): Pr
   const config = await getConfig()
   const defaults = defaultConfig
   return config[key] === null || config[key] === undefined ? defaults[key] : config[key]
+}
+
+export function getDefaultConfig() {
+  return defaultConfig;
 }
 
 export async function getConfig() {

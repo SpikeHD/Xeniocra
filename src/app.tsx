@@ -1,11 +1,14 @@
 import { invoke } from '@tauri-apps/api/tauri';
-import './app.css';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
 import { Sidebar } from './components/Sidebar';
 import { SettingsList } from './components/SettingsList';
 
-import bg from './assets/xenia-pattern-straight.png';
+import Menu from './icons/list.png'
+import Cog from './icons/cog.png'
+
+import './bg.css';
+import './app.css';
 
 export function App() {
   const [state, setState] = useState({
@@ -40,7 +43,10 @@ export function App() {
 
   return (
     <>
-      <div class="bg-image"></div>
+      <div id="bgContainer">
+        <div id="stars"></div>
+        <div id="twinkling"></div>
+      </div>
 
       <Sidebar title='Menu' side='left' isOpen={state.menuOpen}>
         <div>Menu Item One</div>
@@ -57,10 +63,14 @@ export function App() {
 
       <div class="top">
         <div class="topLeft">
-          <div onClick={openMenu}>O</div>
+          <div onClick={openMenu}>
+            <img src={Menu} class="icon"></img>
+          </div>
         </div>
         <div class="topRight">
-          <div onClick={openSettings}>=</div>
+          <div onClick={openSettings}>
+            <img src={Cog} class="icon"></img>
+          </div>
         </div>
       </div>
       <div class="contents">

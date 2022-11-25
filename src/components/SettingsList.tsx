@@ -1,8 +1,9 @@
 import { useState, useEffect } from "preact/hooks";
-import { Configuration, getConfig } from "../util/config";
+import { Configuration, getConfig, getDefaultConfig } from "../util/config";
+import { FileSelect } from "./FileSelect";
 
 export function SettingsList() {
-  const [settings, setSettings] = useState({})
+  const [settings, setSettings] = useState(getDefaultConfig())
 
   useEffect(() => {
     // This sucks
@@ -14,7 +15,8 @@ export function SettingsList() {
   
   return (
     <div>
-      Game Path: <input type="text" />
+      <span>Game Path:</span>
+      <FileSelect path={settings.xeniaDirectory} directory={false} />
     </div>
   )
 }
