@@ -6,10 +6,12 @@
 mod system_helpers;
 mod games;
 mod scraper;
+mod process;
 
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
+            process::open_xenia,
             games::read_games_dir,
             games::get_game_data,
             system_helpers::run_program,

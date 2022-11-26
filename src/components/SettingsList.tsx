@@ -14,6 +14,8 @@ export function SettingsList() {
     (async () => {
       const config = await getConfig()
       setSettings(config)
+
+      console.log(settings)
     })()
   }, [])
 
@@ -43,7 +45,7 @@ export function SettingsList() {
             <input type="checkbox" id="fullscreen" name="fullscreen" onChange={(evt) => {
               // @ts-expect-error Too lazy to fix event types
               setConfigOption('open_in_fullscreen', evt.target.checked)
-            }} checked={settings.cli_options.vsync} />
+            }} checked={settings.open_in_fullscreen} />
           </div>
         </div>
       </div>

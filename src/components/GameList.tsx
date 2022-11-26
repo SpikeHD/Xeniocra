@@ -4,6 +4,8 @@ import './GameList.css'
 import { listen } from '@tauri-apps/api/event'
 
 import Default from '../icons/xbox.png'
+import { getConfig } from "../util/config"
+import { invoke } from "@tauri-apps/api"
 
 export interface GameData {
   path: string
@@ -14,8 +16,18 @@ export interface GameData {
 export function GameList() {
   const [gameList, setGameList] = useState([] as GameData[])
 
-  const openGame = (path: string) => {
-    console.log(path)
+  const openGame = async (path: string) => {
+    const config = await getConfig()
+    
+    invoke('open_xenia', {
+      path: config.xenia_directory,
+      game: path,
+      options: {
+        gpu_backend: config.cli_options.gpu_backend,
+        vsync: config.cli_options.vsync,
+        protect_zero: config.cli_options.protect_zero
+      }
+    })
   }
 
   listen('game_data', (data: { payload: GameData }) => {

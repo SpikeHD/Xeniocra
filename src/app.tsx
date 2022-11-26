@@ -68,6 +68,8 @@ export function App() {
         <div id="twinkling"></div>
       </div>
 
+      <div id="title">Xeniacra</div>
+
       {/* <Sidebar title='Menu' side='left' isOpen={state.menuOpen}>
         <div>Menu Item One</div>
         <div>Menu Item One</div>
@@ -83,9 +85,9 @@ export function App() {
 
       <div class="top">
         <div class="topLeft">
-          <div onClick={openMenu}>
+          {/* <div onClick={openMenu}>
             <img src={Menu} class="icon"></img>
-          </div>
+          </div> */}
         </div>
         <div class="topRight">
           <div onClick={openSettings}>
