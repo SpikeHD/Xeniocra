@@ -19,13 +19,13 @@ export function SettingsList() {
 
   // Change the Xenia exec
   const changeXeniaExecutable = async (path: string) => {
-    await setConfigOption('xeniaDirectory', path)
+    await setConfigOption('xenia_directory', path)
     setSettings(await getConfig())
   }
 
   // Change the game path
   const changeGamePath = async (path: string) => {
-    await setConfigOption('gamesDirectory', path)
+    await setConfigOption('games_directory', path)
     setSettings(await getConfig())
 
     // Trigger a games check
@@ -35,14 +35,31 @@ export function SettingsList() {
   
   return (
     <>
+      <div class="sidebar-title">Xeniocra Settings</div>
+      <div class="settings_section">
+        <div class="settings_checkboxes">
+          <div>
+            <label for="fullscreen">Open In Fullscreen</label>
+            <input type="checkbox" id="fullscreen" name="fullscreen" onChange={(evt) => {
+              // @ts-expect-error Too lazy to fix event types
+              setConfigOption('open_in_fullscreen', evt.target.checked)
+            }} checked={settings.cli_options.vsync} />
+          </div>
+        </div>
+      </div>
       <div class="settings_section">
         <span>Xenia Executable:</span>
-        <FileSelect path={settings.xeniaDirectory} isDirectory={false} onchange={changeXeniaExecutable} />
+        <FileSelect path={settings.xenia_directory} isDirectory={false} onchange={changeXeniaExecutable} />
       </div>
       <div class="settings_section">
         <span>Game Path:</span>
-        <FileSelect path={settings.gamesDirectory} isDirectory={true} onchange={changeGamePath} />
+        <FileSelect path={settings.games_directory} isDirectory={true} onchange={changeGamePath} />
       </div>
+
+      <div class="divider"></div>
+      
+      <div class="sidebar-title">Xenia Settings</div>
+
       <div class="settings_section">
         <span>GPU Backend</span>
         <select onChange={(evt) => {

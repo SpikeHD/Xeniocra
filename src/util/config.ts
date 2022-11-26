@@ -7,9 +7,9 @@ let defaultConfig: Configuration
 
 ;(() => {
   defaultConfig = {
-    openInFullscreen: false,
-    gamesDirectory: '',
-    xeniaDirectory: '',
+    open_in_fullscreen: false,
+    games_directory: '',
+    xenia_directory: '',
     cli_options: {
       gpu_backend: 'any',
       vsync: false,
@@ -19,9 +19,9 @@ let defaultConfig: Configuration
 })()
 
 export interface Configuration {
-  openInFullscreen: boolean
-  gamesDirectory: string
-  xeniaDirectory: string
+  open_in_fullscreen: boolean
+  games_directory: string
+  xenia_directory: string
   cli_options: CLIOptions
 }
 

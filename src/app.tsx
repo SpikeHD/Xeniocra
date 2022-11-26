@@ -28,7 +28,7 @@ export function App() {
   }
 
   const runGameScraper = async () => {
-    const gamesDir = await getConfigOption('gamesDirectory')
+    const gamesDir = await getConfigOption('games_directory')
     const list = await invoke('read_games_dir', {
       dir: gamesDir
     }) as string[]
@@ -68,11 +68,11 @@ export function App() {
         <div id="twinkling"></div>
       </div>
 
-      <Sidebar title='Menu' side='left' isOpen={state.menuOpen}>
+      {/* <Sidebar title='Menu' side='left' isOpen={state.menuOpen}>
         <div>Menu Item One</div>
         <div>Menu Item One</div>
-      </Sidebar>
-      <Sidebar title='Settings' side='right' isOpen={state.settingsOpen}>
+      </Sidebar> */}
+      <Sidebar title='' side='right' isOpen={state.settingsOpen}>
         <SettingsList />
       </Sidebar>
 
