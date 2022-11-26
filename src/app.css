@@ -1,24 +1,14 @@
-.bg-image {
-  position: absolute;
-  z-index: -99;
+.icon {
+  filter: invert(1);
+  height: 30px;
+  margin: 20px;
 
-  filter: invert(13%) sepia(81%) saturate(628%) hue-rotate(194deg) brightness(92%) contrast(88%);
-  background-image: url("./assets/xenia-straight-fixed.png");
-  background-size: 800px;
-
-  width: 100vw;
-  height: 100vh;
-
-  animation: slide 15s linear infinite;
+  transition: all 0.1s ease-in;
 }
 
-@keyframes slide{
-  0% {
-    background-position : 0px 0px
-  }
-  100% {
-    background-position : 2000px 2000px
-  }
+.icon:hover {
+  filter: invert(0.8);
+  cursor:pointer;
 }
 
 .sidebar-bg {

@@ -8,8 +8,11 @@
   z-index: 99;
   position: absolute;
   height: 100%;
-  width: 20%;
-  background-color: grey;
+  width: 30%;
+  background-color: transparent;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 
   margin: 0;
   padding: 0;
@@ -18,26 +21,36 @@
 }
 
 .sidebar.left {
-  left: -20%;
-  transition: left ease-in-out 0.2s;
+  left: -30%;
+  transition: all ease-in-out 0.2s;
+
+  border-right: 1px solid transparent;
 }
 
 .sidebar.right {
-  right: -20%;
-  transition: right ease-in-out 0.2s;
+  right: -30%;
+  transition: all ease-in-out 0.2s;
+
+  border-left: 1px solid transparent;
 }
 
 .sidebar.left.open {
   left: 0;
+
+  border-color: #fff;
 }
 
 .sidebar.right.open {
   right: 0;
+
+  border-color: #fff;
 }
 
 .sidebar-inner {
   display: flex;
   flex-direction: column;
+
+  width: 95%;
 }
 
 .sidebar-inner div {

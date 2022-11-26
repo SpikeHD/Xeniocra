@@ -1,0 +1,18 @@
+.file_select {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 90%;
+}
+
+.file_select input {
+  width: 80%;
+}
+
+.file_select img {
+  height: 20px;
+
+  filter: invert(1);
+}

@@ -1,8 +1,6 @@
 use duct::cmd;
 use std::path::PathBuf;
 
-#[cfg(windows)]
-
 #[tauri::command]
 pub fn run_program(path: PathBuf, args: Option<String>) {
   // Without unwrap_or, this can crash when UAC prompt is denied
