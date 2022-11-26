@@ -60,8 +60,6 @@ pub fn get_games_in_dir(dir: PathBuf) -> Vec<String> {
     let filestr = filename.to_str().unwrap();
     let meta = potential_dir.metadata().unwrap();
 
-    println!("file: {}", filestr);
-
     // If it's a file, add it to our list
     if meta.is_file() {
       let mut is_exec = false;

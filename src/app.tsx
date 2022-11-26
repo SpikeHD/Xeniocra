@@ -1,39 +1,47 @@
 import { invoke } from '@tauri-apps/api/tauri';
+import { listen } from '@tauri-apps/api/event';
 import { useEffect, useRef, useState } from 'preact/hooks';
 
+import { getConfigOption } from './util/config';
 import { Sidebar } from './components/Sidebar';
 import { SettingsList } from './components/SettingsList';
+import { GameList } from './components/GameList';
 
 import Menu from './icons/list.png'
 import Cog from './icons/cog.png'
 
 import './bg.css';
 import './app.css';
-import { GameList } from './components/GameList';
-import { getConfigOption } from './util/config';
 
 export function App() {
   const [state, setState] = useState({
-    menuOpen: true,
-    settingsOpen: true,
+    menuOpen: false,
+    settingsOpen: false,
   });
 
-  function closeMenus() {
+  const closeMenus = () => {
     setState(() => ({
+      ...state,
       menuOpen: false,
-      settingsOpen: false
+      settingsOpen: false,
     }));
   }
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-
-    runGameScraper()
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+  const runGameScraper = async () => {
+    const gamesDir = await getConfigOption('gamesDirectory')
+    const list = await invoke('read_games_dir', {
+      dir: gamesDir
+    }) as string[]
+  
+    for (const game of list) {
+      invoke('get_game_data', {
+        gamePath: gamesDir,
+        name: game
+      })
     }
-  }, [])
+  }
+
+  runGameScraper()
 
   const handleClickOutside = (evt: Event) => {
     // @ts-expect-error I love typescript
@@ -44,6 +52,14 @@ export function App() {
 
   const openMenu = () => setState({ ...state, menuOpen: !state.menuOpen})
   const openSettings = () => setState({ ...state, settingsOpen: !state.settingsOpen})
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [])
 
   return (
     <>
@@ -82,18 +98,4 @@ export function App() {
       </div>
     </>
   )
-}
-
-async function runGameScraper() {
-  const gamesDir = await getConfigOption('gamesDirectory')
-  const list = await invoke('read_games_dir', {
-    dir: gamesDir
-  }) as string[]
-
-  for (const game of list) {
-    invoke('get_game_data', {
-      gamePath: gamesDir,
-      name: game
-    })
-  }
 }
