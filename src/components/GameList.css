@@ -27,7 +27,3 @@
 .game_item img {
   height: 200px;
 }
-
-.game_item .default {
-  filter: invert(1);
-}

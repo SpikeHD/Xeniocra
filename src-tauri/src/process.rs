@@ -11,12 +11,10 @@ pub struct XeniaOptions {
 
 #[tauri::command]
 pub fn open_xenia(path: PathBuf, game: PathBuf, options: XeniaOptions) {
-  println!("Opening {} with game: {}", path.to_str().unwrap(), game.to_str().unwrap());
-
   // Open Xenia with arguments
   match open::with(
     format!(
-      "\"{}\" --gpu={} --vsync={} --protect_zero={}",
+      "\"{}\" --gpu={} --vsync={} --protect_zero={} --fullscreen",
       game.to_str().unwrap_or(""),
       options.gpu_backend,
       options.vsync,

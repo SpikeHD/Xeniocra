@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "preact/hooks"
 import './GameList.css'
 import { listen } from '@tauri-apps/api/event'
 
-import Default from '../icons/xbox.png'
+import Default from '../icons/default_game.png'
 import { getConfig } from "../util/config"
 import { invoke } from "@tauri-apps/api"
 
@@ -46,7 +46,7 @@ export function GameList() {
         gameList.map(g => {
           return (
             <div class="game_item" onClick={() => openGame(g.path)}>
-              <img src={g.image || Default} class={g.image === '' ? 'default':''} />
+              <img src={g.image || Default} />
               <span>{g.name}</span>
             </div>
           )})
