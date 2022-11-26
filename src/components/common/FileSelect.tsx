@@ -1,5 +1,5 @@
-import { dialog } from "@tauri-apps/api";
-import { useState, useEffect } from "preact/hooks";
+import { dialog } from "@tauri-apps/api"
+import { useState, useEffect } from "preact/hooks"
 
 import Folder from "../../icons/folder.png"
 import "./FileSelect.css"

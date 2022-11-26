@@ -1,5 +1,6 @@
 import { fs } from '@tauri-apps/api'
 import { dataDir } from '@tauri-apps/api/path'
+import { CLIOptions } from './cliConfig';
 
 let configFilePath: string
 let defaultConfig: Configuration
@@ -9,6 +10,11 @@ let defaultConfig: Configuration
     openInFullscreen: false,
     gamesDirectory: '',
     xeniaDirectory: '',
+    cli_options: {
+      gpu_backend: 'any',
+      vsync: false,
+      protect_zero: true,
+    }
   }
 })()
 
@@ -16,6 +22,7 @@ export interface Configuration {
   openInFullscreen: boolean
   gamesDirectory: string
   xeniaDirectory: string
+  cli_options: CLIOptions
 }
 
 export async function setConfigOption<K extends keyof Configuration>(key: K, value: Configuration[K]): Promise<void> {

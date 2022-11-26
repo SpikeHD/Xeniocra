@@ -21,6 +21,7 @@ body {
   height: 100%;
 }
 
+select,
 input[type='text'] {
   padding: 2px;
   outline: none;
@@ -31,6 +32,12 @@ input[type='text'] {
   transition: border-color ease-in-out 0.1s
 }
 
+select,
 input[type='text']:focus {
   border-bottom: 2px solid var(--blue-highlight);
+}
+
+select {
+  margin: 10px;
+  width: 90%;
 }
