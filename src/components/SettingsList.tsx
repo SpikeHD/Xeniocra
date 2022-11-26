@@ -1,6 +1,6 @@
 import { useState, useEffect } from "preact/hooks";
-import { Configuration, getConfig, getDefaultConfig } from "../util/config";
-import { FileSelect } from "./FileSelect";
+import { setConfigOption, getConfig, getDefaultConfig } from "../util/config";
+import { FileSelect } from "./common/FileSelect";
 
 export function SettingsList() {
   const [settings, setSettings] = useState(getDefaultConfig())
@@ -12,6 +12,22 @@ export function SettingsList() {
       setSettings(config)
     })()
   }, [])
+
+  // Change the Xenia exec
+  const changeXeniaExecutable = async (path: string) => {
+    await setConfigOption('xeniaDirectory', path)
+    setSettings(await getConfig())
+  }
+
+  // Change the game path
+  const changeGamePath = async (path: string) => {
+    await setConfigOption('gamesDirectory', path)
+    setSettings(await getConfig())
+
+    // Trigger a games check
+    const gameRefreshEvent = new CustomEvent('RefreshGames')
+    window.dispatchEvent(gameRefreshEvent)
+  }
   
   return (
     <>
@@ -25,16 +41,4 @@ export function SettingsList() {
       </div>
     </>
   )
-}
-
-async function changeXeniaExecutable(path: string) {
-  const config = await getConfig()
-
-  config.xeniaDirectory = path
-}
-
-async function changeGamePath(path: string) {
-  const config = await getConfig()
-
-  config.gamesDirectory = path
 }

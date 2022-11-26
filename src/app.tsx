@@ -9,6 +9,8 @@ import Cog from './icons/cog.png'
 
 import './bg.css';
 import './app.css';
+import { GameList } from './components/GameList';
+import { getConfigOption } from './util/config';
 
 export function App() {
   const [state, setState] = useState({
@@ -25,6 +27,8 @@ export function App() {
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
+
+    runGameScraper()
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -74,8 +78,22 @@ export function App() {
         </div>
       </div>
       <div class="contents">
-        Yo
+        <GameList />
       </div>
     </>
   )
+}
+
+async function runGameScraper() {
+  const gamesDir = await getConfigOption('gamesDirectory')
+  const list = await invoke('read_games_dir', {
+    dir: gamesDir
+  }) as string[]
+
+  for (const game of list) {
+    invoke('get_game_data', {
+      gamePath: gamesDir,
+      name: game
+    })
+  }
 }

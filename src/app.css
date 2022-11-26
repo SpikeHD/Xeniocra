@@ -21,14 +21,14 @@
 
   display: none;
   
-  backdrop-filter: blur(10px) opacity(0);
+  backdrop-filter: blur(6px) opacity(0);
 
-  transition: backdrop-filter ease-in 0.2s;
+  transition: all ease-in 0.2s;
 }
 
 .sidebar-bg.show {
   display: block;
-  backdrop-filter: blur(10px) opacity(1);
+  backdrop-filter: blur(2px) opacity(1);
 }
 
 .top {

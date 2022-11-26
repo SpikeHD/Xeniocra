@@ -13,6 +13,5 @@
 
 .file_select img {
   height: 20px;
-
-  filter: invert(1);
+  margin: 2px;
 }
