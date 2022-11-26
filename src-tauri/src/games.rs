@@ -12,9 +12,9 @@ pub struct GameData {
 }
 
 #[tauri::command]
-pub fn read_games_dir(dir: &str) -> Vec<String> {
+pub fn read_games_dir(dir: &str) -> Vec<PathBuf> {
   let dir_path = PathBuf::from(dir);
-  let mut games: Vec<String> = Vec::new();
+  let mut games: Vec<PathBuf> = Vec::new();
 
   // Append to games list
   games.append(&mut get_games_in_dir(dir_path));
@@ -43,10 +43,10 @@ pub fn read_games_dir(dir: &str) -> Vec<String> {
   games
 }
 
-pub fn get_games_in_dir(dir: PathBuf) -> Vec<String> {
-  let mut games: Vec<String> = Vec::new();
+pub fn get_games_in_dir(dir: PathBuf) -> Vec<PathBuf> {
+  let mut games: Vec<PathBuf> = Vec::new();
   let extensions: Vec<&str> = Vec::from([ ".iso", ".xex", ]);
-  let read_dir = match fs::read_dir(dir) {
+  let read_dir = match fs::read_dir(&dir) {
     Ok(dir) => dir,
     Err(e) => {
       println!("Error reading games directory: {}", e);
@@ -54,8 +54,8 @@ pub fn get_games_in_dir(dir: PathBuf) -> Vec<String> {
     }
   };
 
-  for dir in read_dir {
-    let potential_dir = dir.unwrap();
+  for rdir in read_dir {
+    let potential_dir = rdir.unwrap();
     let filename = potential_dir.file_name();
     let filestr = filename.to_str().unwrap();
     let meta = potential_dir.metadata().unwrap();
@@ -72,7 +72,7 @@ pub fn get_games_in_dir(dir: PathBuf) -> Vec<String> {
       }
 
       if is_exec {
-        games.push(format!("{}", filestr));
+        games.push(dir.join(filestr));
       }
     }
   }
@@ -82,13 +82,14 @@ pub fn get_games_in_dir(dir: PathBuf) -> Vec<String> {
 
 // Start threads that get game data and send it to the frontend
 #[tauri::command]
-pub async fn get_game_data(window: tauri::Window, game_path: String, name: String) {
+pub async fn get_game_data(window: tauri::Window, game_path: PathBuf) {
   std::thread::spawn(move || block_on(async {
-    let title = name.replace(".iso", "").replace(".xex", "");
+    let filename = game_path.file_name().unwrap().to_str().unwrap().to_string();
+    let title = filename.clone().replace(".iso", "").replace(".xex", "");
     let boxart = scraper::scrape_boxart(title.clone()).await;
 
     window.emit("game_data", GameData {
-      path: PathBuf::from(game_path).join(&name),
+      path: PathBuf::from(game_path),
       name: title,
       image: boxart
     })

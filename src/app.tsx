@@ -35,8 +35,7 @@ export function App() {
   
     for (const game of list) {
       invoke('get_game_data', {
-        gamePath: gamesDir,
-        name: game
+        gamePath: game,
       })
     }
   }
